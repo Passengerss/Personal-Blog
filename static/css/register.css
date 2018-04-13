@@ -1,0 +1,43 @@
+    body{
+        background-color: rgb(65,105,113);
+    }
+    .reg_div{
+        margin: 180px auto 0;
+        border: 0 solid red;
+        height: 650px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image: url("/static/images/reg.png");
+    }
+    .reg_div form{
+        border: 0 solid #0000ff;
+        width: 500px;
+        position: relative;
+        left: 500px;
+        top: 160px;
+    }
+    .reg_form input{
+        margin-left: 15px;
+        margin-bottom: 10px;
+        color: black;
+    }
+    .reg_form input.desc{
+        text-align: justify;
+        width: auto;
+        height: 100px;
+    }
+    .reg_form .head_pic{
+        margin-left: 15px;
+    }
+    #sub_form{
+        margin-left:98px;
+        width: 120px;
+        padding: 0;
+        height: 25px;
+        background-color: rgb(83,147,173);
+    }
+    .reg_form label{
+        font-size: 16px;
+        font-weight: bold;
+        color: #FFBD69;
+    }

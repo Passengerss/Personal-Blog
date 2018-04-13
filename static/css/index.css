@@ -1,0 +1,158 @@
+    body{
+        background-color: rgba(188,197,200,0.8);
+    }
+    .main_div{
+        margin:120px auto 0;
+        border: 0 solid green;
+        background-image: url("/static/images/bg.png");
+        background-size: 100% 100%;
+        opacity: 1;
+    }
+     .left_div,.left_div .head_pic,.middle_div,.right_div{
+         border:1px dotted rgba(68, 59, 255,0.1);
+     }
+    /*左侧个人信息样式*/
+    .left_div{
+        display: inline-block;
+        margin-top: 10px;
+        margin-left: 20px;
+        padding: 10px;
+        height: 700px;
+        width: 20%;
+        float: left;
+    }
+    .left_div .head_pic{
+        line-height: 100px;
+        margin:10px;
+        width: 80px;
+        height: 80px;
+    }
+    .left_div .head_pic img{
+        width: 100%;
+        height: 100%;
+        /*设置圆角*/
+        border-radius:50%;
+    }
+    .left_div .info_table{
+        border-collapse: collapse;
+        width:100%;
+    }
+    td{
+        border: 1px dotted black;
+        padding-left: 10px;
+        height: 40px;
+        color: deeppink;
+    }
+    td.level{
+        width:80px;
+    }
+    td input,td span.desc{
+        color: deeppink;
+    }
+    td input{
+        border:0;
+        background-color: rgba(0,0,0,0);
+        width: 100%;
+        height: 100%
+    }
+    td span.desc{
+        display: block;
+        text-indent: 32px;
+        font-size: 18px;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+    /**/
+    .edit_info td{
+        text-align: center;
+        border-width: 0;
+    }
+    .edit_info td a{
+        color: #52454c;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .edit_info td:hover{
+        background-color: #86a8d3;
+        text-decoration: underline;
+    }
+    /*目录信息样式*/
+    h2{font-family: 仿宋;font-size: 26px;color: rgba(12,54,250,0.6)}
+    .middle_div{
+        overflow: auto;
+        display: inline-block;
+        margin-top: 10px;
+        text-align: left;
+        margin-left: 10px;
+        padding: 10px ;
+        height: 700px;
+        width: 35%;
+    }
+    .type,.add_type{
+        display: inline-block;
+        width: 80%;
+        padding: 2px;
+        border: 2px solid rgba(255,255,255,0.7);
+        padding-left: 5px;
+        background-color: #9dccf357;
+        font-size: 22px;
+        font-family: 仿宋;
+        font-weight: bold;
+        margin-bottom: -1px;
+    }
+    .type:hover,a.add_type:hover{box-shadow: 2px 0 10px 0 #0000ff;}
+    .types li ul{display: none;}
+    .types li ul.current{display: block;}
+    .types li ul li{margin: 3px 0 2px;padding: 2px;}
+    .types li ul li:hover{background-color: #86a8d3;}
+    .types li ul a{
+        text-decoration: none;
+        color: #020e0bbd;
+        font-family: 仿宋;
+        font-size: 20px;
+        font-weight: bold;
+        overflow: hidden;
+    }
+    .types li ul a:hover{text-decoration: underline;}
+
+    span.action{
+        width: 100%;
+        display: none;
+        border: 0 solid;
+        text-align:right;
+    }
+    /*提示信息*/
+    .tips{
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        font-family: 仿宋;
+        font-weight: bold;
+        line-height: 30px;
+    }
+    a.add{color:chartreuse;font-style: normal}
+    li.add_type{text-align: center;background-color: rgba(0,0,0,0);border:0;margin-top: 2px}
+    a.add_type{
+        text-decoration: none;
+        width: 100px;
+        text-align: center;
+    }
+
+    /*显示区样式*/
+    .right_div{
+        overflow: hidden;
+        display: inline-block;
+        margin-top: 10px;
+        text-align: center;
+        margin-left: 20px;
+        padding: 10px;
+        height: 700px;
+        width: 35%;
+    }
+    .right_div iframe{
+        width: 100%;
+        height: 100%;
+        border-width: 0;
+        /*border-color: red;*/
+    }

@@ -1,0 +1,46 @@
+
+    .login_div{
+        width: 300px;
+        height: 300px;
+        margin-top:15%;
+        margin-left: 62%;
+        margin-bottom:15%;
+        line-height: 50px;
+        /* 设置透明度 */
+        /*filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 1;*/
+
+    }
+    .bg_div{
+        background-position: 100% 100%;
+        z-index: -1;
+        background-image: url("/static/images/login.png");
+    }
+    .login_form{
+        padding-top: 40px;
+        filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.8;
+    }
+    .login_form p{
+        margin-bottom: 0;
+        padding-left: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        width: 340px;
+    }
+    .p_password{
+        margin-top: 0;
+    }
+    .p_password input{
+        margin-left: 2px;
+    }
+    .p_submit input{
+        width: 176px;
+        height: 20px;
+        margin-left: 66px;
+        background-color: rgb(166,144,130);
+    }
+    .p_submit input:hover{
+        color: blue;
+    }
+    body{
+        background-color: #9f9f9f;
+    }

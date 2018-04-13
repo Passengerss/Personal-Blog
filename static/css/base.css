@@ -1,0 +1,76 @@
+    body{
+        margin: 0;
+    }
+    ul{
+        list-style: none;
+    }
+    /* 时钟样式*/
+    .clock{
+        float: left;
+        margin: 10px 10px 0 80px;
+        width: 500px;
+        height: 40px;
+        border: 0 solid yellow;
+        padding-left:10px;
+        line-height: 40px;
+        font-family: 仿宋;
+        font-size: 24px;
+        font-weight:bold;
+    }
+    /* 菜单栏样式*/
+    .menu{
+        width: 600px;
+        height: 50px;
+        font-size: 0;
+        padding: 0;
+        margin: 0 0 -80px 60%;
+    }
+    .menu li{
+        width: 100px;
+        height: 50px;
+        border: 1px solid rgb(160,160,160);
+        line-height: 50px;
+        text-align: center;
+        display: inline-block;
+        font-size: 20px;
+        margin: -1px;
+    }
+    li.loginout span{
+        font-size: 4px;
+        color: red;
+        font-family: 仿宋;
+    }
+    a.loginout:hover{
+        text-decoration: underline;
+    }
+    .menu li:hover{
+        background-color: #9f7f9f;
+    }
+    .menu li a{
+        color: black;
+        text-decoration: none;
+    }
+    .menu li a:hover{
+        color: #00ffff;
+    }
+
+    /* 提示消息样式 */
+    .error_tip{
+        display: none;
+        color: red;
+        font-size: 14px;
+        font-weight: normal;
+    }
+    /* 底部样式 */
+    .about{
+        margin:10px auto 0;
+        padding:0;
+        width: 1000px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        color: #000000;
+    }
+    .about span{
+        margin-left: 0;
+    }

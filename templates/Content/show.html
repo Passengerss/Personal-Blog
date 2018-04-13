@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="/static/css/content_css/show.css" type="text/css">
+<body>
+
+    <div class=show" align="center">
+        <div class="title">{{book.title}}</div>
+        <div class="type">{{book.ttype}}</div>
+        <div class="show_content">
+            <!--取消HTML转义-->
+            {% autoescape off %}
+            {{book.content}}
+            {% endautoescape %}
+        </div>
+    </div>
+
+</body>
+</html>

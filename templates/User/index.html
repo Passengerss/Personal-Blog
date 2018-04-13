@@ -1,0 +1,174 @@
+{%extends "base.html"%}
+
+{%block body%}
+
+<script type="text/javascript">
+    $(function () {
+         /* 分类效果*/
+        $('.type').click(function() {
+		    $(this).next().slideToggle();
+        });
+         /* 只展开第一个分类*/
+        $(".types li:nth-child(2) ul").attr("class","current");
+        /* 截取长度*/
+         $(".type").each(function () {
+             if($(this).text().length > 9){
+                var type = $(this).text().slice(0,9)+"...";
+                $(this).html(type);
+             }
+         });
+        /*有用户登录时可展开*/
+        if({{request.session.user_name|length}}> 0){
+            uedit();
+            $("li.title").each(function () {
+                $(this).click(
+                    function () {
+                        $(this).children("span.action").slideToggle();
+                    }
+                )});
+        }else {
+            $("tr.edit_info").css("display","none");
+        }
+        function uedit() {
+            /*设置编辑框不可操作*/
+            $("td input").attr("readonly","readonly");
+            $("td span.desc").attr("contentEditable","false");
+        }
+
+    });
+
+</script>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <div class="main_div">
+        <div class="left_div">
+            <div class="head_pic"><img src="/media/{{user_info_obj.headpic}}" alt="头像"></div>
+            <table class="info_table">
+               <tr>
+                    <td class="level">用户等级：</td>
+                    <td>{{user_info_obj.level}}</td>
+                </tr>
+                <tr>
+                    <td>昵称：</td>
+                    <td>
+                        <input class="name" type="text" name="name" value="{{user_info_obj.username}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td>
+                        <input class="gender" type="text" name="gender" value="{{user_info_obj.gender}}" maxlength="1">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">注册时间：</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {{user_info_obj.birth}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">邮箱：</td>
+                </tr>
+                <tr>
+                     <td colspan="2">
+                         <input class="email" type="email" name="email" value="{{user_info_obj.email}}">
+                     </td>
+                </tr>
+                <tr>
+                    <td colspan="2">个人简介：</td>
+                </tr>
+                <tr class="desc">
+                    {%if user_info_obj.desc == null%}
+                    <td colspan="2">
+                        <span class="desc" contentEditable="true">主人很懒，什么都没有写...</span>
+                    </td>
+                    {%else%}
+                    <td colspan="2">
+                        <span class="desc" contentEditable="true"> {{user_info_obj.desc}}</span>
+                    </td>
+                    {%endif%}
+                </tr>
+                <tr class="edit_info">
+                    <td><a class="edit_info" href="javascript:;">编辑信息</a></td>
+                    <td><a class="submit_info" href="javascript:;">保存信息</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="middle_div">
+            <ul class="types">
+                <li><h2>分类目录</h2></li>
+                    {%for type,books in dict_info.items%}
+                    <li>
+                        <span class="type" title="{{type}}">{{type}}</span>
+                        <ul class="">
+                            {%for book in books%}
+                            <li class="title" title="{{content.title}}" id="{{book.id}}">
+                                <a href="{%url 'show:show_book' book.id %}" target="show" title="查看原文" >{{book.title}}</a>
+                                <span class="action">
+                                    <a href="{%url 'show:show_book' book.id %}" target="show">查看</a>|
+                                    <a href="{%url 'show:edit' book.id %}" target="show">修改</a>|
+                                    <a href="javascript:delete_info({{book.id}});" id="delete">删除</a>
+                                </span>
+                            </li>
+                            {%endfor%}
+                        </ul>
+                    </li>
+                    {%endfor%}
+                {%if success == "null" %}
+                    <li class="tips">
+                        <h2>温馨提示:</h2>
+                        目测你是刚创建此账号，或者说你已把自己名下的文章内容全部删除，
+                        所以暂时无法显示你的分类信息。如果需要增加相关内容，请进行<a class="add" href="{%url 'show:add'%}" target="show">添加</a>。
+                        为你带来的不便还请谅解。
+                    </li>
+                {%endif%}
+                {%if success == 1%}
+                <li class="add_type">
+                    <a class="add_type" title="添加文章" href="{%url 'show:add'%}" target="show">添加文章</a>
+                </li>
+                {%endif%}
+            </ul>
+        </div>
+        <div class="right_div">
+            <iframe name="show" scrolling="auto"></iframe>
+        </div>
+    </div>
+<script type="text/javascript">
+    $(function () {
+        $("tr.edit_info a.edit_info").click(function () {
+            $("td input").removeAttr("readonly");
+            $("td input,td span.desc").css("color","black");
+            $("td span.desc").attr({"contentEditable":"true"});
+        });
+        /* 修改信息 */
+        $("tr.edit_info a.submit_info").click(function () {
+           var $name = $("td input.name").val();
+            var $gender = $("td input.gender").val();
+            var $email = $("td input.email").val();
+            var $desc = $("td span.desc").text();
+            var $csrf = "{{csrf_token}}";
+            var $data = {"uid":{{request.session.user_id}},"name":$name,"gender":$gender,"email":$email,"desc":$desc,"csrfmiddlewaretoken":$csrf};
+            $.post("{%url 'user:update_info'%}",$data,function (data) {
+                if(data.success === 1){
+                    $("td input").attr("readonly","readonly");
+                    $("td span.desc").attr("contentEditable","false");
+                    $("td input,td span.desc").css("color","deeppink");
+                }else{
+                    alert("保存失败，请重试")
+                }
+            })
+        });
+
+    });
+    /*删除*/
+        function delete_info(book_id) {
+            var url = "/show/delete/"+book_id;
+            $.get(url,function (data) {
+                if(data.success === 1){
+                    $("li").remove("#"+book_id);
+                }
+            })
+        }
+</script>
+{%endblock body%}

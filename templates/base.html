@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script language="javascript" type="text/javascript" ></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <script type="text/javascript" src="/static/js/timer.js"></script>
+    {%block head%}{%endblock head%}
+    <title>我的网站 - {{title}}</title>
+</head>
+
+<body>
+    <div class="clock">我这里显示时钟</div>
+    <ul class="menu">
+        <li><a href="{%url 'user:index'%}">首页</a></li>
+        {%if success == 1 or success == "null" or request.session.user_name%}
+             {%if request.session.user_name|length > 3 %}
+                <li class="loginout">
+                    <span>{{request.session.user_name}}|slice:"3"...|</span>
+                    <a class="loginout" href="{%url 'user:loginout'%}">退出</a>
+                </li>
+             {%else%}
+                 <li class="loginout">
+                     <span>{{request.session.user_name}}|</span>
+                    <a class="loginout" href="{%url 'user:loginout'%}">退出</a>
+                 </li>
+             {%endif%}
+        {%else%}
+             <li><a href="{%url 'user:login'%}">登录</a></li>
+        {%endif%}
+
+        <li><a href="{%url 'user:register'%}">注册</a></li>
+        <li><a href="#">预留区</a></li>
+        <li><a href="{%url 'service:movie_service' 1%}" target="_blank">本站服务</a></li>
+        <li><a href="#">关于本站</a></li>
+    </ul>
+    {%block body%}{%endblock body%}
+
+<hr color = 'orange' size="2px">
+<div class="about">
+    Copyright ©2018 by 大冰块丶.All rights reserved &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+    <span>联系我们Tel：183****8352</span>
+</div>
+</body>
+</html>

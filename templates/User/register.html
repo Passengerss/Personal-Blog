@@ -1,0 +1,56 @@
+{%extends "base.html"%}
+
+{% block body %}
+<script type="text/javascript" src="/static/js/register.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/register.css">
+<div class="reg_div">
+    <form action="{%url 'user:register_handle'%}" method="post" class="reg_form" id="reg_form">
+    {%csrf_token%}
+    <ul>
+        <li>
+            <label for="username">用&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>
+            <input type="text" class = "username" name="username" id="username" placeholder="请输入用户名,用于登录">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <li>
+            <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+            <input type="password" class= "password" name="password" id="password" placeholder="请输入密码">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <li>
+            <label>确认密码：</label>
+            <input type="password" class="cpassword" name="cpassword" id="cpassword" placeholder="请输入密码">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <li>
+            <label>上传头像：</label>
+            <input type="file" class="head_pic" name="headpic" placeholder="选择头像">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <!--<li>-->
+            <!--<label>出生日期：</label>-->
+             <!--<input type="date" name="birth">-->
+            <!--<span class="error_tip" hidden="">提示信息</span>-->
+        <!--</li>-->
+        <li>
+            <label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+            <input type="radio" name="gender" value="男" checked="checked">男
+            <input type="radio" name="gender" value="女">女
+        </li>
+        <li>
+            <label>电子邮箱：</label>
+            <input type="email" id="email" name="email" placeholder="请输入邮箱">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <li>
+            <label>自我介绍：</label>
+            <input type="text" id="desc" name="desc" placeholder="比如：我是一个好人...">
+            <span class="error_tip" hidden="">提示信息</span>
+        </li>
+        <li>
+            <input type="submit" id="sub_form" name="" value="注册">
+        </li>
+    </ul>
+</form>
+</div>
+{% endblock body %}

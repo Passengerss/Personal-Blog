@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资源链接</title>
+</head>
+<style type="text/css">
+    body{margin:0;background-color: rgba(185, 190, 195, 0.5);}
+    /*预留区样式*/
+    div.menu{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 40px;
+        border: 1px solid black;
+        text-align: center;
+        line-height: 40px;
+    }
+    /*搜索栏样式*/
+    div.search{margin:10px 0 ; padding:10px 0;border: 0 solid red;}
+    div.search span{position:relative;left: 60%}
+    div.search span input{border: 1px dotted black; height:20px;background-color: rgba(0,0,0,0)}
+    div.search span a{margin-left: 10px;color: #000;text-decoration: none;box-shadow: 1px 1px 1px 1px #7c95d6;}
+    div.search span a:hover{background-color: #FFBD69}
+    /*主要内容样式*/
+    div.source{
+        width: 1400px;
+        margin: 2px auto 0;
+    }
+    table{
+        table-layout:fixed; /*固定table内部大小*/
+        margin: 10px auto 0;
+        text-align: center;
+        border: 1px solid #b3c7e1;
+        border-collapse: collapse;
+        width: 1400px;
+    }
+    td{
+        white-space:nowrap; /* 设置td不换行*/
+        overflow:hidden;
+        text-overflow: ellipsis;     /* 内容溢出时出现省略号*/
+        border:1px solid #b3c7e1;
+        font-size: 16px;
+        height: 28px;
+    }
+    th.name{width: 140px;}
+    th.link{width: 280px;}
+    th.copy{width: 160px;}
+    th.count{width: 80px;}
+    th.date{width: auto}
+    th.length{width: 80px;}
+
+    td.magnet_link,td.thunder_link{
+        text-align: left;
+        padding: 0;
+        font-size: 0;
+    }
+    td.magnet_link input,td.thunder_link input{
+        font-size: 14px;
+        margin: 0;
+        padding-left: 4px;
+        border: 0;
+        width: 100%;
+        height: 28px;
+        background-color: rgba(0,0,0,0);
+    }
+    td.copy_magnet_link a,td.copy_thunder_link a{color: black;text-decoration: none;box-shadow:0 0 1px 1px black}
+    td.copy_magnet_link:hover,td.copy_thunder_link:hover{
+        background-color: #b3c7e1;
+    }
+
+    /*分页样式*/
+    div.paginations{
+        width: auto;
+        text-align: center;
+    }
+    div.paginations ul{font-size: 0;margin-top:15px;}
+    div.paginations ul li{
+        list-style: none;
+        display: inline-block;
+        margin:0 10px 0;
+        font-size: 16px;
+        height: 20px;
+        padding: 0;
+        text-align: center;
+        background-color: #b3c7e1;
+    }
+    div.paginations ul li:hover{background-color: #FFE7A1}
+    div.paginations ul li a{
+        display:inline-block;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        color: black;
+    }
+    li a.active{background-color: #FFBD69;text-decoration: underline;}
+</style>
+<body>
+<div class="main_div">
+    <div class="menu">预留区域</div>
+    <div class="search"><span><input type="text" class="search" placeholder="输入关键字进行搜索"><a href="#" title="搜索">搜索</a></span></div>
+    <div class="source" >
+        <table>
+            <tbody>
+                <tr class="title">
+                    <th class="name">资源名称</th>
+                    <th class="name">英文名称</th>
+                    <th class="link">magnet:磁力链接</th>
+                    <th class="link">thunder:迅雷链接</th>
+                    <th class="date">上映日期</th>
+                    <th class="length">片长</th>
+                    <th class="count">下载次数</th>
+                    <th class="copy" colspan="2">一键复制</th>
+                </tr>
+                {%for each in page%}
+                <tr>
+                    <td title="">{{each.id}}</td>
+                    <td title="{{each.title}}">{{each.title}}</td>
+                    <td class="magnet_link"><input type="text" value="{{each.title}}" readonly="true"></td>
+                    <td class="thunder_link"><input type="text" value="{{each.id}}" readonly="true"></td>
+                    <td>2018/12/12</td>
+                    <td>123分钟</td>
+                    <td>125</td>
+                    <td class="copy_magnet_link" title="复制磁力链接"><a href="javascript:;">磁力链接</a></td>
+                    <td class="copy_thunder_link" title="复制迅雷链接"><a href="javascript:;">迅雷链接</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="paginations">
+        <ul>
+            {%if page.has_previous %}
+            <li><a href="{%url 'service:movie_service' page.previous_page_number%}" class="last_page" title="上一页">上一页</a></li>
+            {%else%}
+            <li><a href="#" class="last_page">上一页</a></li>
+            {%endif%}
+
+            {%if page_num < 11 %}
+            <!--页数较少时-->
+                {%for index in page_list%}
+                    {%if index == page.number%}
+                    <li><a href="{%url 'service:movie_service' index%}" class="active">{{index}}</a></li>
+                    {%else%}
+                    <li><a href="{%url 'service:movie_service' index%}">{{index}}</a></li>
+                    {%endif%}
+                {%endfor%}
+
+            {%else%}
+                {%if first_page_show %}
+                    {%if page.number == 1%}
+                    <li><a href="{%url 'service:movie_service' 1%}" class="active">1</a></li>
+                    {%endif%}
+                    <li><a href="{%url 'service:movie_service' 1%}">1</a></li>
+                {%endif%}
+
+                {% if left_ellipsis %}
+                    <li><span>...</span></li>
+                {% endif %}
+                {% for index in left_page_index %}
+                    {%if index == page.number%}
+                    <li><a href="{%url 'service:movie_service' index%}" class="active">{{index}}</a></li>
+                    {%else%}
+                    <li><a href="{%url 'service:movie_service' index%}">{{index}}</a></li>
+                    {%endif%}
+                {% endfor %}
+
+                {% for index in right_page_index %}
+                    {%if index == page.number%}
+                    <li><a href="{%url 'service:movie_service' index%}" class="active">{{index}}</a></li>
+                    {%else%}
+                    <li><a href="{%url 'service:movie_service' index%}">{{index}}</a></li>
+                    {%endif%}
+                {% endfor %}
+                {% if right_ellipsis %}
+                    <li><span>...</span></li>
+                {% endif %}
+
+                {%if last_page_show %}
+                <li><a href="{%url 'service:movie_service' page_num%}">{{page_num}}</a></li>
+                {%endif%}
+            {%endif%}
+
+            {%if page.has_next %}
+            <li><a href="{%url 'service:movie_service' page.next_page_number%}" class="next_page" title="下一页">下一页</a></li>
+            {%else%}
+            <li><a href="#" class="next_page">下一页</a></li>
+            {%endif%}
+        </ul>
+    </div>
+</div>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("td.copy_magnet_link").each(function () {
+                $(this).click(function () {
+                    $(this).siblings(".magnet_link").children("input").select();
+                    document.execCommand("copy");
+                    alert("磁力链接复制成功！"+$(this).siblings(".magnet_link").children("input").val())
+                })
+            });
+            $("td.copy_thunder_link").each(function () {
+                $(this).click(function () {
+                    $(this).siblings(".thunder_link").children("input").select();
+                    document.execCommand("copy");
+                    alert("迅雷链接复制成功！"+$(this).siblings(".thunder_link").children("input").val())
+                })
+            })
+
+
+        })
+    </script>
+
+</body>
+</html>
+

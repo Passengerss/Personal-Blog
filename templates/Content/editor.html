@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="/static/css/content_css/editor.css">
+<body>
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    {% if "edit" in request.path %}
+    <div class=show">
+        <div class="title">
+            <input type="text" name="title" value="{{book.title}}" maxlength="20">
+        </div>
+        <div class="type">
+            {%for type in typeinfo%}
+            <input class="radio" type="radio" name="type" value="{{type.id}}">{{type.type}}
+            {%endfor%}
+        </div>
+        <div class="editor" id="" contentEditable="true">
+            {% autoescape off %}
+            {{book.content}}
+            {% endautoescape %}
+        </div>
+        <div class="save"><a class="save" href="javascript:;">保存</a></div>
+    </div>
+    <script type="text/javascript">
+         $(function () {
+
+            $(".radio").each(function (){
+                if($(this).val() == {{book.ttype.id}}){
+                    $(this).attr("checked","checked");
+                }
+            });
+            /* 修改 */
+            $("a.save").click(function () {
+                var $title = $(".title input").val();
+                var $type_id = $(".type input:checked").val();
+                var $content = $(".editor").html();
+                var $csrf = "{{csrf_token}}";
+                var $data = {"title":$title,"type_id":$type_id,"content":$content,"csrfmiddlewaretoken":$csrf};
+                $.post("{%url 'show:edit_handle' book.id%}",$data,function (data) {
+                    if(data.success === 1){
+                        $("div.save").css("display","none");
+                        window.parent.location="{%url 'user:index'%}"
+                    }else {
+                        alert("修改失败，请重试")
+                    }
+                })
+            })
+        })
+    </script>
+    {% endif %}
+
+
+    {% if "add" in request.path %}
+    <div class=show">
+        <div class="title">
+            <input type="text" name="title" value="" maxlength="20" placeholder="请输入内容标题">
+        </div>
+        <div class="type edit_type">
+            <input type="text" name="type" value="" maxlength="20" placeholder="请输入分类名称">
+        </div>
+        <div class="editor" id="editor" contentEditable="true">
+            请在此处输入你的文字，五千字以内都行哦！
+            完成后，点击保存即可
+        </div>
+        <div class="save"><a class="save" href="javascript:void(0);">保存</a></div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var title_error = true;
+            var type_error = true;
+
+            function title_length_check() {
+                var $title_len = $(".title input").val();
+                if($title_len.length == "" || $title_len.length > 20){
+                    title_error = true;
+                    alert("请务必填写标题且长度不能超过20个字符")
+                }else {title_error = false}
+            }
+
+            function type_length_check() {
+                var $type = $(".type input").val();
+                if( $type.length == "" || $type.length > 20){
+                    type_error = true;
+                    alert("类型不能为空,且长度不能超过20个字符");
+                }else {type_error = false}
+            }
+
+            function send_info() {
+                var $title = $(".title input").val();
+                var $type = $(".type input").val();
+                var $content = $(".editor").html();
+                var $csrf = "{{csrf_token}}";
+                var $data = {"title":$title,"type":$type,"content":$content,"csrfmiddlewaretoken":$csrf};
+                $.post("{%url 'show:add_handle' request.session.user_id%}",$data,function (data) {
+                    if(data.success === 1){
+                        $("div.save").css("display","none");
+                        window.parent.location("{%url 'user:index'%}")
+                    }else {
+                        alert("保存失败，请重试")
+                    }
+                })
+            }
+
+            $(".save").one("click",function () {
+                title_length_check();
+                type_length_check();
+                if(title_error === false && type_error === false){
+                    send_info();
+                }
+                return false;
+            });
+
+        })
+    </script>
+    {% endif %}
+
+</body>
+</html>
